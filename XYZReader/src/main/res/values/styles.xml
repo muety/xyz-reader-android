@@ -24,6 +24,21 @@
         <item name="colorAccent">@color/secondaryColor</item>
     </style>
 
-    <style name="Theme.Bacon.ActionBar.Title" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse"/>
+    <style name="Theme.Bacon.Text.ActionBar.Title" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse"/>
+
+    <style name="Theme.Bacon.Text.BaseText" parent="@style/TextAppearance.AppCompat.Body1">
+        <item name="android:textColor">@color/textColorPrimary</item>
+    </style>
+
+    <style name="Theme.Bacon.Text.Title" parent="@style/Theme.Bacon.Text.BaseText"/>
+
+    <style name="Theme.Bacon.Text.Subheading" parent="@style/TextAppearance.AppCompat.Body1">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Theme.Bacon.Text.SubSubheading" parent="@style/Theme.Bacon.Text.Subheading">
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/grey700</item>
+    </style>
 
 </resources>

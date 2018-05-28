@@ -7,7 +7,7 @@
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_height="@dimen/action_bar_height"
         android:background="?attr/colorPrimary"
         android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
@@ -15,7 +15,7 @@
 
         <TextView
             android:id="@+id/app_title_tv"
-            style="@style/Theme.Bacon.ActionBar.Title"
+            style="@style/Theme.Bacon.Text.ActionBar.Title"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:elevation="4dp"
@@ -33,12 +33,13 @@
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/lightGrey"
             android:clipToPadding="false"
-            android:scrollbarStyle="outsideOverlay"
-            android:paddingTop="116dp"
+            android:paddingBottom="28dp"
             android:paddingLeft="@dimen/list_side_margin"
             android:paddingRight="@dimen/list_side_margin"
-            android:paddingBottom="28dp" />
+            android:paddingTop="@dimen/list_top_padding"
+            android:scrollbarStyle="outsideOverlay" />
     </android.support.v4.widget.SwipeRefreshLayout>
 
 </FrameLayout>
