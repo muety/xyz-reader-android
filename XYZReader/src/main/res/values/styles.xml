@@ -48,4 +48,8 @@
         <item name="android:textColor">@color/secondaryColor</item>
     </style>
 
+    <style name="Theme.Bacon.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.Bacon.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
 </resources>

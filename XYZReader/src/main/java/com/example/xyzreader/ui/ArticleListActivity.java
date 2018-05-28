@@ -2,9 +2,9 @@ package com.example.xyzreader.ui;
 
 /*
 TODO: App icon
-TODO: Detail view
 TODO: Clean marco_layout constants eventually
-TODO: Shared item animation
+TODO: Transition animations
+TODO: Maintain scroll position
  */
 
 import android.content.BroadcastReceiver;
@@ -12,6 +12,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.Cursor;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
@@ -20,13 +21,22 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.xyzreader.R;
+import com.example.xyzreader.data.Article;
 import com.example.xyzreader.data.ArticleLoader;
 import com.example.xyzreader.data.UpdaterService;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * An activity representing a list of Articles. This activity has different presentations for
@@ -35,12 +45,15 @@ import com.example.xyzreader.data.UpdaterService;
  * activity presents a grid of items as cards.
  */
 public class ArticleListActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>, SwipeRefreshLayout.OnRefreshListener {
-
-    private static final String TAG = ArticleListActivity.class.toString();
+    private static final int LOADER_ID = 0;
 
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private RecyclerView mRecyclerView;
     private boolean mIsRefreshing = false;
+
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.sss");
+    private SimpleDateFormat outputFormat = new SimpleDateFormat();
+    private GregorianCalendar START_OF_EPOCH = new GregorianCalendar(2, 1, 1);
 
     private BroadcastReceiver mRefreshingReceiver = new BroadcastReceiver() {
         @Override
@@ -62,7 +75,7 @@ public class ArticleListActivity extends AppCompatActivity implements LoaderMana
 
         mSwipeRefreshLayout.setOnRefreshListener(this);
 
-        getSupportLoaderManager().initLoader(0, null, this);
+        getSupportLoaderManager().initLoader(LOADER_ID, null, this);
 
         if (savedInstanceState == null) {
             refresh();
@@ -122,9 +135,24 @@ public class ArticleListActivity extends AppCompatActivity implements LoaderMana
 
     private class Adapter extends RecyclerView.Adapter<ViewHolder> {
         private Cursor mCursor;
+        private Map<Long, Article> articlesMap = new HashMap<>();
 
         public Adapter(Cursor cursor) {
             mCursor = cursor;
+            for (mCursor.moveToFirst(); !mCursor.isAfterLast(); mCursor.moveToNext()) {
+                String body = mCursor.getString(ArticleLoader.Query.BODY);
+
+                Article article = new Article(
+                        mCursor.getLong(ArticleLoader.Query._ID),
+                        mCursor.getString(ArticleLoader.Query.TITLE),
+                        mCursor.getString(ArticleLoader.Query.AUTHOR),
+                        mCursor.getString(ArticleLoader.Query.THUMB_URL),
+                        mCursor.getString(ArticleLoader.Query.PHOTO_URL),
+                        body.substring(0, Math.min(body.length(), 150000)),
+                        parsePublishedDate(mCursor.getString(ArticleLoader.Query.PUBLISHED_DATE))
+                );
+                articlesMap.put(article.getId(), article);
+            }
         }
 
         @Override
@@ -141,11 +169,21 @@ public class ArticleListActivity extends AppCompatActivity implements LoaderMana
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(ArticleListActivity.this, ArticleDetailActivity.class);
-                    intent.putExtra(ArticleDetailFragment.ARG_ITEM_ID, getItemId(vh.getAdapterPosition()));
+                    intent.putExtra(ArticleDetailActivity.KEY_ITEM, articlesMap.get(getItemId(vh.getAdapterPosition())));
                     startActivity(intent);
                 }
             });
             return vh;
+        }
+
+        private Date parsePublishedDate(String date) {
+            try {
+                return dateFormat.parse(date);
+            } catch (ParseException ex) {
+                Log.e(getClass().getSimpleName(), ex.getMessage());
+                Log.i(getClass().getSimpleName(), "passing today's date");
+                return new Date();
+            }
         }
 
         @Override
@@ -153,18 +191,24 @@ public class ArticleListActivity extends AppCompatActivity implements LoaderMana
             mCursor.moveToPosition(position);
 
             holder.titleView.setText(mCursor.getString(ArticleLoader.Query.TITLE));
-            holder.dateView.setText(
-                    DateUtils.getRelativeTimeSpanString(
-                            mCursor.getLong(ArticleLoader.Query.PUBLISHED_DATE),
-                            System.currentTimeMillis(), DateUtils.HOUR_IN_MILLIS,
-                            DateUtils.FORMAT_ABBREV_ALL).toString()
-            );
             holder.subtitleView.setText(mCursor.getString(ArticleLoader.Query.AUTHOR));
             holder.thumbnailView.setImageUrl(
                     mCursor.getString(ArticleLoader.Query.THUMB_URL),
                     ImageLoaderHelper.getInstance(ArticleListActivity.this).getImageLoader()
             );
             holder.thumbnailView.setAspectRatio(mCursor.getFloat(ArticleLoader.Query.ASPECT_RATIO));
+            Typeface tf = Typeface.createFromAsset(getAssets(), getString(R.string.font_roboto_slab));
+            holder.titleView.setTypeface(tf);
+
+            Date publishedDate = parsePublishedDate(mCursor.getString(ArticleLoader.Query.PUBLISHED_DATE));
+            if (!publishedDate.before(START_OF_EPOCH.getTime())) {
+                holder.dateView.setText(DateUtils.getRelativeTimeSpanString(
+                        publishedDate.getTime(),
+                        System.currentTimeMillis(), DateUtils.HOUR_IN_MILLIS,
+                        DateUtils.FORMAT_ABBREV_ALL).toString());
+            } else {
+                holder.dateView.setText(outputFormat.format(publishedDate));
+            }
         }
 
         @Override

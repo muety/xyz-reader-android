@@ -8,7 +8,8 @@
     <dimen name="fab_margin">24dp</dimen>
 
     <dimen name="action_bar_height">56dp</dimen>
-    <dimen name="list_top_padding">62dp</dimen>
+    <dimen name="action_bar_height_expanded">200dp</dimen>
+    <dimen name="list_top_padding">8dp</dimen>
     <dimen name="article_card_padding">8dp</dimen>
 
 </resources>
