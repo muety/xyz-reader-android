@@ -6,8 +6,7 @@
     <color name="secondaryColor">#ff9800</color>
     <color name="secondaryLightColor">#ffc947</color>
     <color name="secondaryDarkColor">#c66900</color>
-    <color name="primaryTextColor">#000000</color>
-    <color name="secondaryTextColor">#000000</color>
+    <color name="primaryTextColor">@color/grey900</color>
 
     <color name="photoPlaceholder">@color/grey300</color>
     <color name="lightGrey">@color/grey200</color>

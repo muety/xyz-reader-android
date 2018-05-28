@@ -30,7 +30,9 @@
         <item name="android:textColor">@color/textColorPrimary</item>
     </style>
 
-    <style name="Theme.Bacon.Text.Title" parent="@style/Theme.Bacon.Text.BaseText"/>
+    <style name="Theme.Bacon.Text.Title" parent="@style/Theme.Bacon.Text.BaseText">
+        <item name="android:textSize">24sp</item>
+    </style>
 
     <style name="Theme.Bacon.Text.Subheading" parent="@style/TextAppearance.AppCompat.Body1">
         <item name="android:textStyle">bold</item>
@@ -39,6 +41,11 @@
     <style name="Theme.Bacon.Text.SubSubheading" parent="@style/Theme.Bacon.Text.Subheading">
         <item name="android:textStyle">normal</item>
         <item name="android:textColor">@color/grey700</item>
+    </style>
+
+    <style name="Theme.Bacon.Text.Highlighted" parent="@style/Theme.Bacon.Text.BaseText">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/secondaryColor</item>
     </style>
 
 </resources>
