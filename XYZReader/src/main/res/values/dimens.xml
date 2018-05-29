@@ -12,4 +12,9 @@
     <dimen name="list_top_padding">8dp</dimen>
     <dimen name="article_card_padding">8dp</dimen>
 
+    <dimen name="text_area_padding">16dp</dimen>
+    <dimen name="text_area_top_margin">0dp</dimen>
+    <dimen name="detail_content_max_width">660dp</dimen>
+    <dimen name="detail_content_elevation">0dp</dimen>
+
 </resources>

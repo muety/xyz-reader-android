@@ -4,9 +4,12 @@
     android:id="@+id/linearLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="0dp"
+    android:layout_gravity="center_horizontal"
+    android:layout_marginTop="@dimen/text_area_top_margin"
     android:background="@android:color/white"
-    android:padding="24dp">
+    android:elevation="@dimen/detail_content_elevation"
+    android:maxWidth="@dimen/detail_content_max_width"
+    android:padding="@dimen/text_area_padding">
 
     <TextView
         android:id="@+id/details_title_tv"
