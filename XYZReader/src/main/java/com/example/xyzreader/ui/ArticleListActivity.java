@@ -1,9 +1,6 @@
 package com.example.xyzreader.ui;
 
-/*
-TODO: Transition animations
- */
-
+import android.app.ActivityOptions;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -17,8 +14,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.support.v7.widget.Toolbar;
 import android.text.format.DateUtils;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -43,9 +42,10 @@ import java.util.Map;
  * touched, lead to a {@link ArticleDetailActivity} representing item details. On tablets, the
  * activity presents a grid of items as cards.
  */
-public class ArticleListActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>, SwipeRefreshLayout.OnRefreshListener {
+public class ArticleListActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>, SwipeRefreshLayout.OnRefreshListener, Toolbar.OnMenuItemClickListener {
     private static final int LOADER_ID = 0;
 
+    private Toolbar mToolbar;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private RecyclerView mRecyclerView;
     private boolean mIsRefreshing = false;
@@ -69,9 +69,12 @@ public class ArticleListActivity extends AppCompatActivity implements LoaderMana
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_article_list);
 
-        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
-        mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        mToolbar = findViewById(R.id.toolbar);
+        mSwipeRefreshLayout = findViewById(R.id.swipe_refresh_layout);
+        mRecyclerView = findViewById(R.id.recycler_view);
 
+        mToolbar.inflateMenu(R.menu.main);
+        mToolbar.setOnMenuItemClickListener(this);
         mSwipeRefreshLayout.setOnRefreshListener(this);
 
         getSupportLoaderManager().initLoader(LOADER_ID, null, this);
@@ -132,6 +135,16 @@ public class ArticleListActivity extends AppCompatActivity implements LoaderMana
         startService(new Intent(this, UpdaterService.class));
     }
 
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.refresh:
+                onRefresh();
+                break;
+        }
+        return false;
+    }
+
     private class Adapter extends RecyclerView.Adapter<ViewHolder> {
         private Cursor mCursor;
         private Map<Long, Article> articlesMap = new HashMap<>();
@@ -147,7 +160,15 @@ public class ArticleListActivity extends AppCompatActivity implements LoaderMana
                         mCursor.getString(ArticleLoader.Query.AUTHOR),
                         mCursor.getString(ArticleLoader.Query.THUMB_URL),
                         mCursor.getString(ArticleLoader.Query.PHOTO_URL),
-                        body.substring(0, Math.min(body.length(), 150000)),
+                        /*
+                            I wanted to pass the serialized article over to the details activity in order to reduce
+                            database interactions and code complexity. However, I found that Android has a maximum size
+                            limit for Parcels, which is exceeded for two of six articles and accordingly causes the app to crash.
+                            To be precise, simply cutting the text is wrong. The proper way would be to use a CursorLoader in the
+                            details activity. However, since this task was about design, I hope that this non-optimal, simple approach
+                            is fine, too.
+                         */
+                        body.substring(0, Math.min(body.length(), 10000)),
                         parsePublishedDate(mCursor.getString(ArticleLoader.Query.PUBLISHED_DATE))
                 );
                 articlesMap.put(article.getId(), article);
@@ -169,7 +190,9 @@ public class ArticleListActivity extends AppCompatActivity implements LoaderMana
                 public void onClick(View view) {
                     Intent intent = new Intent(ArticleListActivity.this, ArticleDetailActivity.class);
                     intent.putExtra(ArticleDetailActivity.KEY_ITEM, articlesMap.get(getItemId(vh.getAdapterPosition())));
-                    startActivity(intent);
+
+                    Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(ArticleListActivity.this).toBundle();
+                    startActivity(intent, bundle);
                 }
             });
             return vh;
@@ -219,10 +242,10 @@ public class ArticleListActivity extends AppCompatActivity implements LoaderMana
 
         public ViewHolder(View view) {
             super(view);
-            thumbnailView = (ImageView) view.findViewById(R.id.thumbnail);
-            titleView = (AppCompatTextView) view.findViewById(R.id.article_title);
-            dateView = (TextView) view.findViewById(R.id.article_date);
-            subtitleView = (TextView) view.findViewById(R.id.article_subtitle);
+            thumbnailView = view.findViewById(R.id.thumbnail);
+            titleView = view.findViewById(R.id.article_title);
+            dateView = view.findViewById(R.id.article_date);
+            subtitleView = view.findViewById(R.id.article_subtitle);
         }
     }
 }

@@ -34,7 +34,7 @@ public class ArticleDetailActivity extends AppCompatActivity implements View.OnC
     private AppCompatTextView mTitleView;
     private TextView mDateView;
     private TextView mAuthorView;
-    private TextView mTextView;
+    private TextView mTextView = (TextView) findViewById(R.id.details_text_tv);
     private ImageView mImageView;
     private ImageButton mShareFab;
     private NestedScrollView mScrollContainer;
@@ -44,7 +44,7 @@ public class ArticleDetailActivity extends AppCompatActivity implements View.OnC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_article_detail);
 
-        final Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        final Toolbar mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -52,14 +52,13 @@ public class ArticleDetailActivity extends AppCompatActivity implements View.OnC
         final Bundle bundle = savedInstanceState == null ? getIntent().getExtras() : savedInstanceState;
         mArticle = bundle.getParcelable(KEY_ITEM);
 
-        mToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
-        mTitleView = (AppCompatTextView) findViewById(R.id.details_title_tv);
-        mDateView = (TextView) findViewById(R.id.details_date_tv);
-        mAuthorView = (TextView) findViewById(R.id.details_author_tv);
-        mTextView = (TextView) findViewById(R.id.details_text_tv);
-        mImageView = (ImageView) findViewById(R.id.details_image_iv);
-        mShareFab = (ImageButton) findViewById(R.id.share_fab);
-        mScrollContainer = (NestedScrollView) findViewById(R.id.detail_scroll_container);
+        mToolbarLayout = findViewById(R.id.collapsing_toolbar);
+        mTitleView = findViewById(R.id.details_title_tv);
+        mDateView = findViewById(R.id.details_date_tv);
+        mAuthorView = findViewById(R.id.details_author_tv);
+        mImageView = findViewById(R.id.details_image_iv);
+        mShareFab = findViewById(R.id.share_fab);
+        mScrollContainer = findViewById(R.id.detail_scroll_container);
 
         populateViews();
 
