@@ -34,7 +34,7 @@ public class ArticleDetailActivity extends AppCompatActivity implements View.OnC
     private AppCompatTextView mTitleView;
     private TextView mDateView;
     private TextView mAuthorView;
-    private TextView mTextView = (TextView) findViewById(R.id.details_text_tv);
+    private TextView mTextView;
     private ImageView mImageView;
     private ImageButton mShareFab;
     private NestedScrollView mScrollContainer;
@@ -56,6 +56,7 @@ public class ArticleDetailActivity extends AppCompatActivity implements View.OnC
         mTitleView = findViewById(R.id.details_title_tv);
         mDateView = findViewById(R.id.details_date_tv);
         mAuthorView = findViewById(R.id.details_author_tv);
+        mTextView = findViewById(R.id.details_text_tv);
         mImageView = findViewById(R.id.details_image_iv);
         mShareFab = findViewById(R.id.share_fab);
         mScrollContainer = findViewById(R.id.detail_scroll_container);
