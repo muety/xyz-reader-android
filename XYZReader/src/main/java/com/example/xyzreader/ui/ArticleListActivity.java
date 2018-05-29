@@ -168,7 +168,7 @@ public class ArticleListActivity extends AppCompatActivity implements LoaderMana
                             details activity. However, since this task was about design, I hope that this non-optimal, simple approach
                             is fine, too.
                          */
-                        body.substring(0, Math.min(body.length(), 10000)),
+                        body.substring(0, Math.min(body.length(), 5000)),
                         parsePublishedDate(mCursor.getString(ArticleLoader.Query.PUBLISHED_DATE))
                 );
                 articlesMap.put(article.getId(), article);

@@ -15,6 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@android:color/transparent"
+            android:elevation="@dimen/app_bar_elevation"
             app:layout_collapseMode="pin"
             app:popupTheme="@style/Theme.Bacon.PopupOverlay"
             app:title="@string/app_name"

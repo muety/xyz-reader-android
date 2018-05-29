@@ -1,7 +1,5 @@
 <resources>
-    <dimen name="fab_elevation">2dp</dimen>
-    <dimen name="fab_press_translation_z">6dp</dimen>
-    <dimen name="fab_margin">24dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
     <dimen name="action_bar_height_expanded">200dp</dimen>
     <dimen name="list_top_padding">8dp</dimen>
     <dimen name="article_card_padding">8dp</dimen>
@@ -12,4 +10,5 @@
     <dimen name="detail_content_elevation">0dp</dimen>
     <dimen name="article_list_image_height">100dp</dimen>
     <dimen name="list_side_margin">4dp</dimen>
+    <dimen name="app_bar_elevation">4dp</dimen>
 </resources>

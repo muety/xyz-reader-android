@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ImageButton xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.FloatingActionButton xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/share_fab"
-    android:layout_width="56dp"
-    android:layout_height="56dp"
-    android:layout_gravity="bottom|end"
-    android:layout_marginBottom="@dimen/fab_margin"
-    android:layout_marginRight="@dimen/fab_margin"
-    android:background="@drawable/add_fab_background"
-    android:contentDescription="@string/action_share"
-    android:elevation="@dimen/fab_elevation"
-    android:src="@drawable/ic_share"
-    android:stateListAnimator="@animator/fab_state_list_anim" />
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="end|bottom"
+    android:layout_margin="@dimen/fab_margin"
+    app:fabSize="normal"
+    app:srcCompat="@drawable/ic_share" />
