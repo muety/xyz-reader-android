@@ -11,7 +11,7 @@
     android:maxWidth="@dimen/detail_content_max_width"
     android:padding="@dimen/text_area_padding">
 
-    <TextView
+    <android.support.v7.widget.AppCompatTextView
         android:id="@+id/details_title_tv"
         style="@style/Theme.Bacon.Text.Title"
         android:layout_width="wrap_content"

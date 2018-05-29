@@ -2,12 +2,12 @@ package com.example.xyzreader.ui;
 
 import android.content.Intent;
 import android.content.res.ColorStateList;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.format.DateUtils;
@@ -31,7 +31,7 @@ public class ArticleDetailActivity extends AppCompatActivity implements View.OnC
     private Article mArticle;
 
     private CollapsingToolbarLayout mToolbarLayout;
-    private TextView mTitleView;
+    private AppCompatTextView mTitleView;
     private TextView mDateView;
     private TextView mAuthorView;
     private TextView mTextView;
@@ -53,7 +53,7 @@ public class ArticleDetailActivity extends AppCompatActivity implements View.OnC
         mArticle = bundle.getParcelable(KEY_ITEM);
 
         mToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
-        mTitleView = (TextView) findViewById(R.id.details_title_tv);
+        mTitleView = (AppCompatTextView) findViewById(R.id.details_title_tv);
         mDateView = (TextView) findViewById(R.id.details_date_tv);
         mAuthorView = (TextView) findViewById(R.id.details_author_tv);
         mTextView = (TextView) findViewById(R.id.details_text_tv);
@@ -87,9 +87,6 @@ public class ArticleDetailActivity extends AppCompatActivity implements View.OnC
 
         mToolbarLayout.setTitle(mTitleView.getText());
         mToolbarLayout.setExpandedTitleTextColor(ColorStateList.valueOf(getResources().getColor(android.R.color.transparent)));
-
-        Typeface tf = Typeface.createFromAsset(getAssets(), getString(R.string.font_roboto_slab));
-        mTitleView.setTypeface(tf);
     }
 
     @Override

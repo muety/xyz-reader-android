@@ -10,12 +10,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.Cursor;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.text.format.DateUtils;
@@ -192,8 +192,6 @@ public class ArticleListActivity extends AppCompatActivity implements LoaderMana
 
             holder.titleView.setText(mCursor.getString(ArticleLoader.Query.TITLE));
             holder.subtitleView.setText(mCursor.getString(ArticleLoader.Query.AUTHOR));
-            Typeface tf = Typeface.createFromAsset(getAssets(), getString(R.string.font_roboto_slab));
-            holder.titleView.setTypeface(tf);
 
             Picasso.get().load(mCursor.getString(ArticleLoader.Query.THUMB_URL)).into(holder.thumbnailView);
 
@@ -216,14 +214,14 @@ public class ArticleListActivity extends AppCompatActivity implements LoaderMana
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public ImageView thumbnailView;
-        public TextView titleView;
+        public AppCompatTextView titleView;
         public TextView dateView;
         public TextView subtitleView;
 
         public ViewHolder(View view) {
             super(view);
             thumbnailView = (ImageView) view.findViewById(R.id.thumbnail);
-            titleView = (TextView) view.findViewById(R.id.article_title);
+            titleView = (AppCompatTextView) view.findViewById(R.id.article_title);
             dateView = (TextView) view.findViewById(R.id.article_date);
             subtitleView = (TextView) view.findViewById(R.id.article_subtitle);
         }

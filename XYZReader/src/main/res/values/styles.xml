@@ -34,10 +34,12 @@
     </style>
 
     <style name="Theme.Bacon.Text.Title" parent="@style/Theme.Bacon.Text.BaseText">
+        <item name="android:fontFamily">@font/roboto_slab</item>
         <item name="android:textSize">24sp</item>
     </style>
 
     <style name="Theme.Bacon.Text.Subheading" parent="@style/TextAppearance.AppCompat.Body1">
+        <item name="android:fontFamily">@font/roboto_slab</item>
         <item name="android:textStyle">bold</item>
     </style>
 

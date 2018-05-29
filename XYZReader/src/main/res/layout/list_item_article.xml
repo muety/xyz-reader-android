@@ -20,7 +20,7 @@
             android:layout_height="@dimen/article_list_image_height"
             android:scaleType="centerCrop" />
 
-        <TextView
+        <android.support.v7.widget.AppCompatTextView
             android:id="@+id/article_title"
             style="@style/Theme.Bacon.Text.Subheading"
             android:layout_width="match_parent"
