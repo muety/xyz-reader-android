@@ -5,7 +5,9 @@ import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
@@ -21,15 +23,13 @@ import com.android.volley.toolbox.ImageLoader;
 import com.example.xyzreader.R;
 import com.example.xyzreader.data.Article;
 
-import java.text.SimpleDateFormat;
-import java.util.GregorianCalendar;
-
 /**
  * An activity representing a single Article detail screen, letting you swipe between articles.
  */
 public class ArticleDetailActivity extends AppCompatActivity implements View.OnClickListener {
     public static final String KEY_ITEM = "item";
     public static final String KEY_ITEM_ID = "item_id";
+    public static final String KEY_SCROLL_POSITION = "scroll_y";
 
     private Article mArticle;
 
@@ -40,10 +40,7 @@ public class ArticleDetailActivity extends AppCompatActivity implements View.OnC
     private TextView mTextView;
     private ImageView mImageView;
     private ImageButton mShareFab;
-
-    private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.sss");
-    private SimpleDateFormat outputFormat = new SimpleDateFormat();
-    private GregorianCalendar START_OF_EPOCH = new GregorianCalendar(2, 1, 1);
+    private NestedScrollView mScrollContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +52,7 @@ public class ArticleDetailActivity extends AppCompatActivity implements View.OnC
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        Bundle bundle = savedInstanceState == null ? getIntent().getExtras() : savedInstanceState;
+        final Bundle bundle = savedInstanceState == null ? getIntent().getExtras() : savedInstanceState;
         mArticle = bundle.getParcelable(KEY_ITEM);
 
         mToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
@@ -65,8 +62,17 @@ public class ArticleDetailActivity extends AppCompatActivity implements View.OnC
         mTextView = (TextView) findViewById(R.id.details_text_tv);
         mImageView = (ImageView) findViewById(R.id.details_image_iv);
         mShareFab = (ImageButton) findViewById(R.id.share_fab);
+        mScrollContainer = (NestedScrollView) findViewById(R.id.detail_scroll_container);
 
         populateViews();
+
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                scrollToYPercentage(mScrollContainer, bundle.getFloat(KEY_SCROLL_POSITION, 0));
+            }
+        }, 10);
     }
 
     private void populateViews() {
@@ -90,6 +96,7 @@ public class ArticleDetailActivity extends AppCompatActivity implements View.OnC
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putParcelable(KEY_ITEM, mArticle);
+        outState.putFloat(KEY_SCROLL_POSITION, getYPercentage(mScrollContainer));
     }
 
 
@@ -123,5 +130,14 @@ public class ArticleDetailActivity extends AppCompatActivity implements View.OnC
                         Log.e(getClass().getSimpleName(), volleyError.getMessage());
                     }
                 });
+    }
+
+    private static void scrollToYPercentage(NestedScrollView scrollView, float relativeY) {
+        int height = scrollView.getChildAt(0).getHeight();
+        scrollView.scrollTo(0, (int) (relativeY * height));
+    }
+
+    private static float getYPercentage(NestedScrollView scrollView) {
+        return (float) scrollView.getScrollY() / scrollView.getChildAt(0).getHeight();
     }
 }
