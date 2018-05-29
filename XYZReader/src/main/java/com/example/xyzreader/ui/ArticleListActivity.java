@@ -1,7 +1,6 @@
 package com.example.xyzreader.ui;
 
 /*
-TODO: Clean marco_layout constants eventually
 TODO: Transition animations
  */
 
