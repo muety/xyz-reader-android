@@ -71,6 +71,8 @@ public class ArticleDetailActivity extends AppCompatActivity implements View.OnC
             @Override
             public void run() {
                 scrollToYPercentage(mScrollContainer, bundle.getFloat(KEY_SCROLL_POSITION, 0));
+                mScrollContainer.setVisibility(View.GONE);
+                mScrollContainer.setVisibility(View.VISIBLE);
             }
         }, 10);
     }

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CollapsingToolbarLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/collapsing_toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="0dp"
+    android:padding="0dp"
+    android:theme="@style/Theme.Bacon.AppBarOverlay"
+    app:contentScrim="?attr/colorPrimary"
+    app:expandedTitleTextAppearance="@android:color/transparent"
+    app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/details_image_iv"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/action_bar_height_expanded"
+            android:scaleType="centerCrop"
+            app:srcCompat="@color/photoPlaceholder" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/action_bar_height_expanded"
+            android:background="@drawable/photo_background_protection" />
+
+    </FrameLayout>
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@android:color/transparent"
+        app:layout_collapseMode="pin"
+        app:popupTheme="@style/Theme.Bacon.PopupOverlay" />
+
+</android.support.design.widget.CollapsingToolbarLayout>

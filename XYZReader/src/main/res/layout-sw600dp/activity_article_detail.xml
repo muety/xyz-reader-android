@@ -4,16 +4,10 @@
     android:id="@+id/appbar_layout_activity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/lightGrey"
     tools:context=".ui.ArticleDetailActivity">
 
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/appbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <include layout="@layout/include_collapsing_toolbar" />
-
-    </android.support.design.widget.AppBarLayout>
+    <include layout="@layout/include_collapsing_toolbar" />
 
     <include layout="@layout/include_content_container" />
 

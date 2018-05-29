@@ -101,5 +101,7 @@
     </string>
     <string name="font_roboto_slab">RobotoSlab-Regular.ttf</string>
 
+    <string name="scroll_flags">scroll|exitUntilCollapsed</string>
+
 
 </resources>
