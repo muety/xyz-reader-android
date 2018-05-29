@@ -17,5 +17,6 @@
     <dimen name="text_container_margin">0dp</dimen>
     <dimen name="detail_content_max_width">660dp</dimen>
     <dimen name="detail_content_elevation">0dp</dimen>
+    <dimen name="article_list_image_height">100dp</dimen>
 
 </resources>

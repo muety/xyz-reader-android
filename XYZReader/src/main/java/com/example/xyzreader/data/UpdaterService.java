@@ -55,7 +55,7 @@ public class UpdaterService extends IntentService {
         cpo.add(ContentProviderOperation.newDelete(dirUri).build());
 
         try {
-            JSONArray array = RemoteEndpointUtil.fetchJsonArray();
+            JSONArray array = RemoteEndpointUtil.fetchJsonArray(getApplicationContext());
             if (array == null) {
                 throw new JSONException("Invalid parsed item array" );
             }

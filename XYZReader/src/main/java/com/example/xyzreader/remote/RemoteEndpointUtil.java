@@ -1,5 +1,6 @@
 package com.example.xyzreader.remote;
 
+import android.content.Context;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -9,6 +10,7 @@ import org.json.JSONTokener;
 import java.io.IOException;
 import java.net.URL;
 
+import okhttp3.Cache;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -19,10 +21,10 @@ public class RemoteEndpointUtil {
     private RemoteEndpointUtil() {
     }
 
-    public static JSONArray fetchJsonArray() {
+    public static JSONArray fetchJsonArray(Context context) {
         String itemsJson = null;
         try {
-            itemsJson = fetchPlainText(Config.BASE_URL);
+            itemsJson = fetchPlainText(Config.BASE_URL, context);
         } catch (IOException e) {
             Log.e(TAG, "Error fetching items JSON", e);
             return null;
@@ -43,14 +45,17 @@ public class RemoteEndpointUtil {
         return null;
     }
 
-    static String fetchPlainText(URL url) throws IOException {
-        OkHttpClient client = new OkHttpClient();
+    static String fetchPlainText(URL url, Context context) throws IOException {
+        OkHttpClient client = new OkHttpClient.Builder()
+                .cache(new Cache(context.getCacheDir(), 1024 * 1024 * 10))
+                .build();
 
         Request request = new Request.Builder()
                 .url(url)
                 .build();
 
         Response response = client.newCall(request).execute();
+
         return response.body().string();
     }
 }

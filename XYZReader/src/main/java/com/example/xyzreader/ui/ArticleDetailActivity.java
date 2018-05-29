@@ -2,7 +2,6 @@ package com.example.xyzreader.ui;
 
 import android.content.Intent;
 import android.content.res.ColorStateList;
-import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,16 +11,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.format.DateUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.ImageLoader;
 import com.example.xyzreader.R;
 import com.example.xyzreader.data.Article;
+import com.squareup.picasso.Picasso;
 
 /**
  * An activity representing a single Article detail screen, letting you swipe between articles.
@@ -85,7 +82,8 @@ public class ArticleDetailActivity extends AppCompatActivity implements View.OnC
                 mArticle.getPublishedDate().getTime(),
                 System.currentTimeMillis(), DateUtils.HOUR_IN_MILLIS));
         mTextView.setText(Html.fromHtml(mArticle.getBody()));
-        fetchAndLoadArticleImage();
+
+        Picasso.get().load(mArticle.getPhotoUrl()).into(mImageView);
 
         mToolbarLayout.setTitle(mTitleView.getText());
         mToolbarLayout.setExpandedTitleTextColor(ColorStateList.valueOf(getResources().getColor(android.R.color.transparent)));
@@ -114,24 +112,6 @@ public class ArticleDetailActivity extends AppCompatActivity implements View.OnC
                 startActivity(Intent.createChooser(shareIntent, getString(R.string.share_using)));
                 break;
         }
-    }
-
-    private void fetchAndLoadArticleImage() {
-        ImageLoaderHelper.getInstance(this).getImageLoader()
-                .get(mArticle.getPhotoUrl(), new ImageLoader.ImageListener() {
-                    @Override
-                    public void onResponse(ImageLoader.ImageContainer imageContainer, boolean b) {
-                        Bitmap bitmap = imageContainer.getBitmap();
-                        if (bitmap != null) {
-                            mImageView.setImageBitmap(imageContainer.getBitmap());
-                        }
-                    }
-
-                    @Override
-                    public void onErrorResponse(VolleyError volleyError) {
-                        Log.e(getClass().getSimpleName(), volleyError.getMessage());
-                    }
-                });
     }
 
     private static void scrollToYPercentage(NestedScrollView scrollView, float relativeY) {
