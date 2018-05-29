@@ -4,7 +4,6 @@ package com.example.xyzreader.ui;
 TODO: App icon
 TODO: Clean marco_layout constants eventually
 TODO: Transition animations
-TODO: Maintain scroll position
  */
 
 import android.content.BroadcastReceiver;

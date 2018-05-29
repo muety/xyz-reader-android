@@ -24,7 +24,10 @@
         <item name="colorAccent">@color/secondaryColor</item>
     </style>
 
-    <style name="Theme.Bacon.Text.ActionBar.Title" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse"/>
+    <style name="Theme.Bacon.Text.ActionBar.Title" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:fontFamily">@font/roboto_slab</item>
+    </style>
 
     <style name="Theme.Bacon.Text.BaseText" parent="@style/TextAppearance.AppCompat.Body1">
         <item name="android:textColor">@color/textColorPrimary</item>

@@ -4,7 +4,7 @@
     android:id="@+id/detail_scroll_container"
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
-    android:layout_gravity="center_horizontal"
+    android:layout_gravity="top|center_horizontal"
     android:clipToPadding="false"
     android:padding="@dimen/text_container_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">

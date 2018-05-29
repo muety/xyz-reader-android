@@ -17,7 +17,8 @@
             android:background="@android:color/transparent"
             app:layout_collapseMode="pin"
             app:popupTheme="@style/Theme.Bacon.PopupOverlay"
-            app:title="@string/app_name">
+            app:title="@string/app_name"
+            app:titleTextAppearance="@style/Theme.Bacon.Text.ActionBar.Title">
 
         </android.support.v7.widget.Toolbar>
 
